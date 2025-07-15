@@ -36,7 +36,7 @@ function Focusable({ onEnterPress, children, focusKey, onClick, isFirstItem = fa
 
 function FocusableList({ children }) {
   return (
-    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" style={{ outline: "none" }}>
+    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 w-full" style={{ outline: "none" }}>
       {children}
     </ul>
   );
@@ -45,6 +45,7 @@ function FocusableList({ children }) {
 function CountryList() {
   const [countries, setCountries] = useState([]);
   const { search } = useContext(AppContext);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const { ref, focusKey } = useFocusable({
@@ -56,8 +57,10 @@ function CountryList() {
   useEffect(() => {
     axios
       .get("https://restcountries.com/v3.1/all?fields=name,region,capital,flags,cca2")
-      .then((res) => setCountries(res.data))
-      .catch((err) => console.error("Failed to fetch countries", err));
+      .then((res) => {setCountries(res.data)
+       setLoading(false); })
+      .catch((err) => {console.error("Failed to fetch countries", err)
+       setLoading(false); });
   }, []);
 
   // Set initial focus to search bar
@@ -76,7 +79,13 @@ function CountryList() {
       <div ref={ref} className=" bg-white min-h-screen  text-orange-600 flex flex-col gap-6">
         <Header />
         <SearchBar />
+ <main className="flex-grow flex items-center justify-center p-6">
+          {loading ? (
+            <div className="text-xl font-bold text-black animate-pulse">
+  Loading countries...
+</div>
 
+          ) : (
         <FocusableList>
           {filteredCountries.map((country, index) => {
             const goToDetail = () => navigate(`/country/${country.name?.common}`);
@@ -117,8 +126,8 @@ function CountryList() {
               </Focusable>
             );
           })}
-        </FocusableList>
-
+        </FocusableList>)}
+</main>
         <Footer />
       </div>
     </FocusContext.Provider>

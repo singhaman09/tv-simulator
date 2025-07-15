@@ -30,7 +30,7 @@ function Focusable({ onEnterPress, children, focusKey, onClick, isFirstItem = fa
 
 function FocusableList({ children }) {
   return (
-    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1" style={{ outline: "none" }}>
+    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 w-full px-4" style={{ outline: "none" }}>
       {children}
     </ul>
   );
@@ -39,6 +39,7 @@ function FocusableList({ children }) {
 function UserList() {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+    const [loading, setLoading] = useState(true); 
 
   const { ref, focusKey } = useFocusable({ 
     focusKey: "USER_PAGE", 
@@ -49,8 +50,11 @@ function UserList() {
   useEffect(() => {
     axios
       .get("https://dummyjson.com/users")
-      .then((res) => setUsers(res.data.users))
-      .catch((err) => console.error("Error fetching users:", err));
+      .then((res) => {setUsers(res.data.users) 
+      setLoading(false);}
+    )
+      .catch((err) => {console.error("Error fetching users:", err)
+       setLoading(false);});
   }, []);
 
   useEffect(() => {
@@ -66,8 +70,14 @@ function UserList() {
         className="bg-white min-h-screen text-orange-600 flex flex-col gap-6"
       >
         <Header />
-        <h1 className="text-2xl font-bold text-orange-600 mb-4">Users</h1>
+        {/* <h1 className="text-2xl font-bold text-orange-600 mb-4">Users</h1> */}
+ <main className="flex-grow flex items-center justify-center p-6">
+          {loading ? (
+            <div className="text-xl font-bold text-black animate-pulse">
+  Loading users...
+</div>
 
+          ) : (
         <FocusableList>
           {users.map((user, index) => {
             const goToDetail = () => navigate(`/user/${user.id}`);
@@ -107,8 +117,8 @@ function UserList() {
               </Focusable>
             );
           })}
-        </FocusableList>
-        
+        </FocusableList>)}
+        </main>
         <Footer />
       </div>
     </FocusContext.Provider>

@@ -68,16 +68,20 @@ function Login() {
   }, []);
 
   return (
+     (
     <FocusContext.Provider value={focusKey}>
-      <div ref={ref} className=" bg-white flex flex-col min-h-screen text-orange-600 relative">
-        <Header />
-        <main className="flex-grow flex items-center justify-center p-6 sm:p-10 mt-16"> {/* Added mt-16 to account for fixed header */}
-          <div className="w-full max-w-md bg-white shadow-2xl rounded-2xl p-8 space-y-8 transform hover:scale-[1.02] transition-transform duration-300">
-            <h1 className="text-4xl font-extrabold text-center text-orange-600 bg-clip-text bg-gradient-to-r from-orange-500 to-red-500 animate-pulse">
+      <div ref={ref} className="bg-white flex flex-col min-h-screen text-orange-600 items-center">
+        <h1 className="text-black text-5xl sm:text-6xl font-black text-center bg-clip-text  mt-12 mb-8 drop-shadow-lg">
+          Welcome to LG Smart TV Setup
+        </h1>
+
+        <main className="flex-grow flex items-center justify-center p-6 sm:p-10">
+          <div className="w-full min-w-xl bg-white shadow-2xl rounded-2xl py-32 px-8 space-y-8 transform hover:scale-[1.02] transition-transform duration-300">
+            {/* <h2 className="text-4xl font-extrabold text-center text-orange-600 bg-clip-text bg-gradient-to-r from-orange-500 to-red-500 animate-pulse">
               Welcome Back
-            </h1>
-            <p className="text-gray-600 text-center text-lg font-medium">
-              Sign in to continue your journey.
+            </h2> */}
+            <p className="text-black text-2xl font-extrabold text-center animate-pulse">
+              Sign in to continue your journey
             </p>
 
             {/* Email Input */}
@@ -110,7 +114,7 @@ function Login() {
                     inputMode="email"
                     className={`w-full px-6 py-4 rounded-xl bg-gray-50 text-gray-900 border-2 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-orange-300 ${
                       focused ? "border-orange-500 shadow-xl scale-105" : "border-gray-200"
-                    } hover:border-orange-400 hover:bg-gray-100 text-lg font-medium placeholder-gray-400`}
+                    } hover:border-orange-400 hover:bg-gray-100 text-lg font-medium placeholder-gray-400 `}
                   />
                   <span className="absolute inset-y-0 right-4 flex items-center text-gray-400">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -121,7 +125,6 @@ function Login() {
               )}
             </Focusable>
 
-            {/* Password Input */}
             <Focusable
               focusKey="login-password"
               onEnterPress={() => {
@@ -167,8 +170,6 @@ function Login() {
                 {error}
               </p>
             )}
-
-            {/* Login Button */}
             <Focusable focusKey="login-button" onEnterPress={handleLogin}>
               {(focused, { ref }) => (
                 <button
@@ -185,10 +186,11 @@ function Login() {
             </Focusable>
           </div>
         </main>
-        <Footer />
+
+        {/* <Footer /> */}
       </div>
     </FocusContext.Provider>
-  );
+  ));
 }
 
 export default React.memo(Login);
