@@ -28,10 +28,9 @@ function Focusable({ onEnterPress, children, focusKey, onClick, isFirstItem = fa
   );
 }
 
-// Simple list container without focus management
 function FocusableList({ children }) {
   return (
-    <ul className="grid gap-3" style={{ outline: "none" }}>
+    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1" style={{ outline: "none" }}>
       {children}
     </ul>
   );
@@ -54,7 +53,6 @@ function UserList() {
       .catch((err) => console.error("Error fetching users:", err));
   }, []);
 
-  // Set initial focus to header navigation
   useEffect(() => {
     setTimeout(() => {
       setFocus("header-nav");
@@ -65,10 +63,10 @@ function UserList() {
     <FocusContext.Provider value={focusKey}>
       <div
         ref={ref}
-        className="p-4 min-h-screen bg-black text-white flex flex-col gap-4"
+        className="bg-white min-h-screen text-orange-600 flex flex-col gap-6"
       >
         <Header />
-        <h1 className="text-2xl font-bold mb-4">Users</h1>
+        <h1 className="text-2xl font-bold text-orange-600 mb-4">Users</h1>
 
         <FocusableList>
           {users.map((user, index) => {
@@ -86,13 +84,24 @@ function UserList() {
                   <li
                     ref={ref}
                     data-focus-key={`user-${user.id}`}
-                    className={`p-3 rounded border cursor-pointer transition border-2 ${
-                      focused
-                        ? "border-blue-500 ring-2 ring-blue-400 bg-gray-700"
-                        : "border-gray-600 hover:border-blue-500 hover:bg-gray-700"
-                    }`}
+                    className={`p-4 rounded-xl bg-white shadow-md border-2 cursor-pointer transition-all duration-300 transform hover:scale-105
+                      ${focused
+                        ? "border-orange-500 ring-4 ring-orange-300 bg-gradient-to-r from-orange-50 to-gray-50 shadow-xl scale-105"
+                        : "border-gray-200 hover:border-orange-400 hover:bg-gray-50"
+                      }`}
                   >
-                    {user.firstName} {user.lastName}
+                    <div className="flex items-center gap-4">
+                      {user.image && (
+                        <img
+                          src={user.image}
+                          alt={`${user.firstName} ${user.lastName} avatar`}
+                          className="w-12 h-8 object-cover rounded"
+                        />
+                      )}
+                      <span className="text-lg font-semibold text-orange-600">
+                        {user.firstName} {user.lastName}
+                      </span>
+                    </div>
                   </li>
                 )}
               </Focusable>

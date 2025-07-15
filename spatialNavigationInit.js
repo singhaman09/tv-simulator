@@ -1,53 +1,3 @@
-// import { init, setKeyMap, setThrottle, destroy, doesFocusableExist } from "@noriginmedia/norigin-spatial-navigation";
-
-// export const initSpatialNavigation = () => {
-//   console.log("Initializing spatial navigation");
-//   destroy();
-//   init({
-//     debug: true,
-//     visualDebug: true,
-//     nativeMode: false, // Explicitly disable native mode for web
-//     shouldFocusDOMNode: true, // Enable native DOM focus for accessibility
-//     domNodeFocusOptions: { preventScroll: false },
-//   });
-
-//   setKeyMap({
-//     left: [205, 214],
-//   up: [203, 211],
-//   right: [206, 213],
-//   down: [204, 212],
-//   enter: [195]
-//   });
-
-//   setThrottle({
-//     throttle: 100,
-//     throttleKeypresses: true,
-//   });
-
-//   // Debug key events
-//   window.addEventListener("keydown", (e) => {
-//     console.log("Global keydown:", e.key, e.keyCode);
-//     if (e.key === "ArrowDown") {
-//       console.log("Testing spatial navigation down");
-//       window.__SPATIAL_NAVIGATION__?.navigateByDirection("down");
-//     } else if (e.key === "ArrowUp") {
-//       console.log("Testing spatial navigation up");
-//       window.__SPATIAL_NAVIGATION__?.navigateByDirection("up");
-//     }
-//   });
-
-//   // Debug focusable components
-//   console.log("Spatial navigation initialized:", window.__SPATIAL_NAVIGATION__);
-//   setTimeout(() => {
-//     console.log("Focusable components after init:", {
-//       loginEmail: doesFocusableExist("login-email"),
-//       loginPassword: doesFocusableExist("login-password"),
-//       loginButton: doesFocusableExist("login-button"),
-//       loginPage: doesFocusableExist("LOGIN_PAGE"),
-//     });
-//   }, 1000);
-// };
-// Explicit import check
 import {
   init,
   setKeyMap,
@@ -86,7 +36,7 @@ export const initSpatialNavigation = () => {
     visualDebug: false,
     nativeMode: false,
     shouldFocusDOMNode: true,
-    distanceCalculationMethod: "center",
+    distanceCalculationMethod: "left",
     throttle: 50,
     throttleKeypresses: true,
   });
@@ -158,13 +108,6 @@ export const initSpatialNavigation = () => {
     } else if ((isTV() && [206, 213, 9003].includes(code)) || code === 39) {
       navigateByDirection("right");
     }
-//     else if ((isTV() && [195, 9005].includes(code)) || code === 13) {
-//   const activeElement = document.activeElement;
-//   if (activeElement?.click) {
-//     activeElement.click(); // fallback
-//   }
-// }
-    // Enter key is handled by Focusable component's onEnterPress
   });
 
   console.log("Spatial navigation initialized");

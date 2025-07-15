@@ -34,10 +34,9 @@ function Focusable({ onEnterPress, children, focusKey, onClick, isFirstItem = fa
   );
 }
 
-// Simple list container without focus management
 function FocusableList({ children }) {
   return (
-    <ul className="grid gap-3" style={{ outline: "none" }}>
+    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" style={{ outline: "none" }}>
       {children}
     </ul>
   );
@@ -48,7 +47,6 @@ function CountryList() {
   const { search } = useContext(AppContext);
   const navigate = useNavigate();
 
-  // Main page focus
   const { ref, focusKey } = useFocusable({
     focusKey: "COUNTRY_PAGE",
     trackChildren: true,
@@ -69,14 +67,13 @@ function CountryList() {
     }, 300);
   }, []);
 
-  // Filter countries based on search input
   const filteredCountries = countries.filter((c) =>
     c.name?.common?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
     <FocusContext.Provider value={focusKey}>
-      <div ref={ref} className="p-4 min-h-screen bg-black text-white flex flex-col gap-4">
+      <div ref={ref} className=" bg-white min-h-screen  text-orange-600 flex flex-col gap-6">
         <Header />
         <SearchBar />
 
@@ -97,13 +94,24 @@ function CountryList() {
                   <li
                     ref={ref}
                     data-focus-key={`country-${focusId}`}
-                    className={`p-3 rounded border cursor-pointer transition border-2 ${
+                    className={`p-4 rounded-xl bg-white shadow-md border-2 cursor-pointer transition-all duration-300 transform hover:scale-105 ${
                       focused
-                        ? "border-blue-500 ring-2 ring-blue-400 bg-gray-700"
-                        : "border-gray-600 hover:border-blue-500 hover:bg-gray-700"
+                        ? "border-orange-500 ring-4 ring-orange-300 bg-gradient-to-r from-orange-50 to-gray-50 shadow-xl scale-105"
+                        : "border-gray-200 hover:border-orange-400 hover:bg-gray-50"
                     }`}
                   >
-                    {country.name?.common || "Unnamed Country"}
+                    <div className="flex items-center gap-4">
+                      {country.flags?.png && (
+                        <img
+                          src={country.flags.png}
+                          alt={`${country.name?.common} flag`}
+                          className="w-12 h-8 object-cover rounded"
+                        />
+                      )}
+                      <span className="text-lg font-semibold text-orange-600">
+                        {country.name?.common || "Unnamed Country"}
+                      </span>
+                    </div>
                   </li>
                 )}
               </Focusable>

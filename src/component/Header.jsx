@@ -33,22 +33,18 @@ function Header() {
   });
 
   return (
-    <header className="bg-gray-800 text-white px-6 py-4 flex justify-between items-center">
-      <h1 className="text-2xl font-bold">Country & User App</h1>
+    <header className="sticky top-0 z-10 bg-gray-800/80 backdrop-blur-sm px-6 py-4 flex justify-between items-center shadow-lg">
+      <h1 className="text-2xl font-bold text-white tracking-tight">Country & User App</h1>
       {isLoggedIn && (
         <FocusContext.Provider value={focusKey}>
-          <nav
-            ref={ref}
-            className="flex gap-4"
-          >
+          <nav ref={ref} className="flex items-center gap-4">
             <Focusable 
               onEnterPress={() => navigate("/country")} 
               focusKey="nav-country"
               onArrowPress={({ direction }) => {
                 if (direction === "down") {
-                  // Navigate to first item in the list
                   setTimeout(() => {
-                    const firstItem = document.querySelector('[data-focus-key^="country-"], [data-focus-key^="user-"]');
+                    const firstItem = document.querySelector(' [data-focus-key^="user-"]');
                     if (firstItem) {
                       const focusKey = firstItem.getAttribute("data-focus-key");
                       if (focusKey) {
@@ -65,11 +61,12 @@ function Header() {
                 <button
                   ref={ref}
                   onClick={() => navigate("/country")}
-                  className={`cursor-pointer px-3 py-1 rounded underline transition border-2 ${
-                    focused 
-                      ? "border-blue-500 ring-2 ring-blue-400 bg-blue-700" 
-                      : "border-transparent text-blue-400"
-                  }`}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out
+                    ${focused 
+                      ? "bg-blue-600 text-white border-blue-500 ring-2 ring-blue-500/30 shadow-md shadow-blue-500/20" 
+                      : "bg-gray-700/50 text-blue-300 border-transparent hover:bg-gray-600/50"
+                    }`}
+                  aria-label="Navigate to Countries"
                 >
                   Countries
                 </button>
@@ -81,7 +78,6 @@ function Header() {
               focusKey="nav-users"
               onArrowPress={({ direction }) => {
                 if (direction === "down") {
-                  // Navigate to first item in the list
                   setTimeout(() => {
                     const firstItem = document.querySelector('[data-focus-key^="country-"], [data-focus-key^="user-"]');
                     if (firstItem) {
@@ -100,11 +96,12 @@ function Header() {
                 <button
                   ref={ref}
                   onClick={() => navigate("/users")}
-                  className={`cursor-pointer px-3 py-1 rounded underline transition border-2 ${
-                    focused 
-                      ? "border-blue-500 ring-2 ring-blue-400 bg-blue-700" 
-                      : "border-transparent text-blue-400"
-                  }`}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out
+                    ${focused 
+                      ? "bg-blue-600 text-white border-blue-500 ring-2 ring-blue-500/30 shadow-md shadow-blue-500/20" 
+                      : "bg-gray-700/50 text-blue-300 border-transparent hover:bg-gray-600/50"
+                    }`}
+                  aria-label="Navigate to Users"
                 >
                   Users
                 </button>
@@ -116,7 +113,6 @@ function Header() {
               focusKey="nav-logout"
               onArrowPress={({ direction }) => {
                 if (direction === "down") {
-                  // Navigate to first item in the list
                   setTimeout(() => {
                     const firstItem = document.querySelector('[data-focus-key^="country-"], [data-focus-key^="user-"]');
                     if (firstItem) {
@@ -135,11 +131,12 @@ function Header() {
                 <button
                   ref={ref}
                   onClick={() => logout(() => navigate("/"))}
-                  className={`px-3 py-1 rounded transition border-2 ${
-                    focused 
-                      ? "bg-red-700 border-red-400 ring-2 ring-red-400" 
-                      : "bg-red-500 border-red-500"
-                  }`}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out
+                    ${focused 
+                      ? "bg-red-600 text-white border-red-500 ring-2 ring-red-500/30 shadow-md shadow-red-500/20" 
+                      : "bg-red-500/80 text-white border-red-500 hover:bg-red-500"
+                    }`}
+                  aria-label="Logout"
                 >
                   Logout
                 </button>

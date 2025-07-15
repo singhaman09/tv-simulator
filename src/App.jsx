@@ -12,7 +12,7 @@ function App() {
   // console.log("App rendered");
   return (
     <AppProvider>
-      <div className="min-h-screen bg-black text-white">
+      {/* <div className="min-h-screen bg-black text-white"> */}
         <Routes>
           <Route path="/" element={<Login />} />
           <Route
@@ -48,7 +48,7 @@ function App() {
             }
           />
         </Routes>
-      </div>
+      {/* </div> */}
     </AppProvider>
   );
 }
